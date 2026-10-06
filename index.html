@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diego | Designer Multidisciplinar &amp; Motion — UI/UX Pro Max</title>
+  <meta name="description" content="Portfólio de Diego — Designer Multidisciplinar, Motion Designer e Editor de Vídeo. Especialista em animações 2D, direção de arte, vídeos imobiliários de alto padrão e campanhas comerciais.">
+  <meta name="keywords" content="Diego Designer, Motion Design, Edição de Vídeo, Direção de Arte, After Effects, Premiere Pro, Portfólio, Vídeos Publicitários, Reels, Real Estate">
+  <meta name="author" content="Diego">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Diego | Designer &amp; Motion Portfolio">
+  <meta property="og:description" content="Transformando marcas em experiências visuais memoráveis através de Motion Design, Edição de Vídeo e Direção de Arte.">
+
+  <!-- Google Fonts: Urbanist (Títulos) e Inter (Corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Urbanist:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Folha de Estilos Pro Max -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cursor Ambient Follower (Luz de Destaque) -->
+  <div class="mouse-follower" aria-hidden="true"></div>
+
+  <!-- Ambient Light Orbs e Grid de Fundo -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <!-- Header / Barra de Navegação Flutuante -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-container" aria-label="Navegação Principal">
+        <a href="#home" class="brand-logo" id="navLogo">
+          <div class="logo-badge">D</div>
+          <div class="logo-text">
+            <span class="logo-name">DIEGO</span>
+            <span class="logo-tag">MOTION &amp; DESIGN</span>
+          </div>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home" class="active">Início</a></li>
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#sobre">Sobre Mim</a></li>
+          <li><a href="#processo">Processo</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <!-- Botão de Áudio Sintetizado UI -->
+          <button class="audio-toggle-btn" id="audioToggleBtn" title="Ativar Som da Interface" aria-label="Ativar ou desativar som da interface">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+
+          <a href="#contato" class="btn btn-primary nav-cta">Falar Comigo</a>
+
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION PRO MAX -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-pill-wrapper">
+            <div class="status-pill">
+              <span class="pulse-dot"></span>
+              <span>Disponível para novos projetos &amp; parcerias</span>
+            </div>
+          </div>
+
+          <h1 class="hero-title">
+            Transformando marcas em experiências visuais <span class="text-gradient">memoráveis.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Designer Multidisciplinar especializado em <strong>Motion Design</strong>, <strong>Edição Dinâmica de Vídeo</strong> e <strong>Direção de Arte</strong>. Unindo ritmo visual hipnótico, sofisticação estética e estratégia para marcas que recusam o comum.
+          </p>
+
+          <!-- Pílula de Showreel Teaser Rápido -->
+          <div class="hero-showreel-pill" onclick="openProjectModal('verissimo')" title="Clique para assistir ao reel em destaque">
+            <span class="mini-play-icon">▶</span>
+            <span class="showreel-text">Assistir Showreel em Destaque</span>
+            <span class="showreel-badge">Vertical 9:16</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#projetos" class="btn btn-primary">
+              <span>Explorar Portfólio</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=5511999999999&text=Ol%C3%A1%20Diego!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" id="heroWaBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              <span>Falar no WhatsApp</span>
+            </a>
+          </div>
+
+          <!-- Barra de Métricas com Contador Animado -->
+          <div class="metrics-strip">
+            <div class="metric-item">
+              <span class="metric-number">+50</span>
+              <span class="metric-label">Projetos Entregues</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-number">5+</span>
+              <span class="metric-label">Anos Criando</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-number">100%</span>
+              <span class="metric-label">Foco em Qualidade</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-number">Top</span>
+              <span class="metric-label">Marcas Atendidas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE INFINITO: FERRAMENTAS & CLIENTES -->
+    <div class="marquee-container" aria-hidden="true">
+      <!-- Linha 1: Ferramentas Criativas (After Effects, Premiere, Photoshop, Illustrator, Blender 3D, DaVinci, Cinema 4D, CapCut, Figma) -->
+      <div class="marquee-track">
+        <span class="marquee-tool-item"><span class="tool-dot dot-ae"></span> After Effects</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-pr"></span> Premiere Pro</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-ps"></span> Photoshop</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-ai"></span> Illustrator</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-bl"></span> Blender 3D</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-dv"></span> DaVinci Resolve</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-c4d"></span> Cinema 4D</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-cc"></span> CapCut Pro</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-fg"></span> Figma</span>
+        <!-- Duplicação para loop contínuo -->
+        <span class="marquee-tool-item"><span class="tool-dot dot-ae"></span> After Effects</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-pr"></span> Premiere Pro</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-ps"></span> Photoshop</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-ai"></span> Illustrator</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-bl"></span> Blender 3D</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-dv"></span> DaVinci Resolve</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-c4d"></span> Cinema 4D</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-cc"></span> CapCut Pro</span>
+        <span class="marquee-tool-item"><span class="tool-dot dot-fg"></span> Figma</span>
+      </div>
+
+      <!-- Linha 2: Projetos & Clientes Atendidos (Em direção reversa) -->
+      <div class="marquee-track-reverse">
+        <span class="marquee-item">Veríssimo <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Ibyte Tecnologia <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Emape Institucional <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Metropolitan Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">IPM Impacto Social <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Top Mooca <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">MADAI Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Alidença <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Vilma Constantino <span class="marquee-bullet">✦</span></span>
+        <!-- Duplicação para loop contínuo -->
+        <span class="marquee-item">Veríssimo <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Ibyte Tecnologia <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Emape Institucional <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Metropolitan Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">IPM Impacto Social <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Top Mooca <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">MADAI Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Alidença <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Vilma Constantino <span class="marquee-bullet">✦</span></span>
+      </div>
+    </div>
+
+    <!-- SEÇÃO DE PROJETOS -->
+    <section class="section-padding" id="projetos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Portfólio Selecionado</span>
+          <h2 class="section-title">Trabalhos em <span class="text-gradient">Destaque</span></h2>
+          <p class="section-description">
+            Passe o mouse sobre os cards para pré-visualizar trechos de vídeo ou clique para abrir o leitor cinematográfico em alta resolução.
+          </p>
+        </div>
+
+        <!-- Abas de Filtros com Estilo Cápsula -->
+        <div class="filter-tabs-wrapper">
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-btn active" data-filter="all">Todos os Projetos</button>
+            <button class="filter-btn" data-filter="motion">Motion &amp; Reels</button>
+            <button class="filter-btn" data-filter="imobiliario">Imobiliário &amp; Vídeo</button>
+            <button class="filter-btn" data-filter="comercial">Comercial &amp; Varejo</button>
+            <button class="filter-btn" data-filter="institucional">Institucional</button>
+            <button class="filter-btn" data-filter="social">Impacto Social</button>
+          </div>
+        </div>
+
+        <!-- Grade de Cards Dinâmicos com Spotlight -->
+        <div class="projects-grid" id="projectsGrid">
+          <!-- Injetado via main.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO SOBRE MIM PRO MAX COM 3D TILT -->
+    <section class="section-padding" id="sobre" style="background: rgba(8, 10, 16, 0.45);">
+      <div class="container">
+        <div class="about-grid">
+          
+          <!-- Coluna Visual com Efeito 3D Tilt -->
+          <div class="about-photo-wrapper">
+            <div class="photo-card" id="photoCard">
+              <div class="profile-img-container">
+                <img id="profilePhotoImg" class="profile-img" src="assets/images/profile/placeholder-avatar.svg" alt="Diego - Designer &amp; Motion">
+              </div>
+              <div class="photo-status-badge">
+                <div class="status-left-group">
+                  <span class="status-dot-green"></span>
+                  <span class="status-badge-text">Diego // Motion &amp; Art</span>
+                </div>
+                <div class="status-timezone-badge">GMT-3 • Brasil</div>
+              </div>
+            </div>
+            <div class="photo-helper-notice">
+              💡 Para exibir sua foto: adicione <code>perfil.jpg</code> dentro da pasta <code>assets/images/profile/</code>
+            </div>
+          </div>
+
+          <!-- Coluna Conteúdo & Bio -->
+          <div class="about-text-content">
+            <span class="section-tag">Sobre Mim</span>
+            <h2 class="about-intro-title">
+              Criando narrativas que conectam através de <span class="text-gradient">ritmo, precisão e estética.</span>
+            </h2>
+
+            <div class="about-paragraphs">
+              <p>
+                Olá! Meu nome é <strong>Diego</strong>. Sou designer multidisciplinar, motion designer e editor de vídeo. Minha missão é traduzir a identidade e os objetivos de cada marca em narrativas visuais cativantes, que se destacam tanto no feed das redes sociais quanto em grandes produções corporativas.
+              </p>
+              <p>
+                Com experiência na concepção de projetos para <strong>mercado imobiliário de alto padrão, grandes redes de varejo tecnológico, projetos sociais e campanhas institucionais</strong>, trabalho com um olhar detalhista que equilibra design gráfico sólido, tipografia cinética expressiva, cortes dinâmicos e sound design imersivo.
+              </p>
+            </div>
+
+            <!-- Competências Principais -->
+            <h3 class="about-skills-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Especialidades &amp; Habilidades
+            </h3>
+
+            <div class="skills-grid">
+              <div class="skill-card-mini">
+                <div class="skill-icon-box">⚡</div>
+                <div>
+                  <div class="skill-title-mini">Motion Graphics 2D</div>
+                  <div class="skill-sub-mini">Animações de logo, tipografia cinética e vinhetas</div>
+                </div>
+              </div>
+
+              <div class="skill-card-mini">
+                <div class="skill-icon-box">🎬</div>
+                <div>
+                  <div class="skill-title-mini">Edição Dinâmica &amp; Ritmo</div>
+                  <div class="skill-sub-mini">Montagem rítmica, cortes rápidos e retenção</div>
+                </div>
+              </div>
+
+              <div class="skill-card-mini">
+                <div class="skill-icon-box">🏢</div>
+                <div>
+                  <div class="skill-title-mini">Campanhas Imobiliárias</div>
+                  <div class="skill-sub-mini">Motion tracking, pranchas e vídeos comerciais</div>
+                </div>
+              </div>
+
+              <div class="skill-card-mini">
+                <div class="skill-icon-box">🔊</div>
+                <div>
+                  <div class="skill-title-mini">Sound Design &amp; Color</div>
+                  <div class="skill-sub-mini">Sincronização sonora e tratamento de cor</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Softwares & Ferramentas Interativas -->
+            <h3 class="about-skills-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              Ferramentas Criativas <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">(clique para ver detalhes)</span>
+            </h3>
+
+            <div class="software-stack">
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ae"></span> After Effects</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-pr"></span> Premiere Pro</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ps"></span> Photoshop</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ai"></span> Illustrator</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-bl"></span> Blender 3D</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-c4d"></span> Cinema 4D</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-cc"></span> CapCut Pro</div>
+              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-dv"></span> DaVinci Resolve</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSO DE TRABALHO -->
+    <section class="section-padding" id="processo">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Metodologia</span>
+          <h2 class="section-title">Como transformo ideias em <span class="text-gradient">movimento</span></h2>
+          <p class="section-description">
+            Um fluxo de trabalho transparente, organizado e focado em entregar projetos de alto padrão no prazo estipulado.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-card">
+            <span class="process-step-num">01</span>
+            <div class="process-icon">💡</div>
+            <h3 class="process-title">Briefing &amp; Estratégia</h3>
+            <p class="process-desc">
+              Alinhamento detalhado sobre os objetivos do projeto, público-alvo, referências visuais e tom de voz desejado.
+            </p>
+          </div>
+
+          <div class="process-card">
+            <span class="process-step-num">02</span>
+            <div class="process-icon">🎨</div>
+            <h3 class="process-title">Direção de Arte &amp; Design</h3>
+            <p class="process-desc">
+              Criação de styleframes, storyboards, seleção de tipografia, paleta cromática e montagem da estrutura visual.
+            </p>
+          </div>
+
+          <div class="process-card">
+            <span class="process-step-num">03</span>
+            <div class="process-icon">⚡</div>
+            <h3 class="process-title">Animação &amp; Edição</h3>
+            <p class="process-desc">
+              Construção dos movimentos, curvas de aceleração, montagem rítmica com a trilha sonora e sound effects.
+            </p>
+          </div>
+
+          <div class="process-card">
+            <span class="process-step-num">04</span>
+            <div class="process-icon">🚀</div>
+            <h3 class="process-title">Refinamento &amp; Entrega</h3>
+            <p class="process-desc">
+              Color grading, revisão minuciosa, ajustes finos e exportação otimizada nos formatos necessários para veiculação.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE CONTATO -->
+    <section class="section-padding" id="contato">
+      <div class="container">
+        <div class="contact-box">
+          <div class="contact-layout">
+            
+            <div class="contact-info-col">
+              <span class="section-tag" style="color: var(--accent-cyan);">Vamos Colaborar?</span>
+              <h3>Pronto para dar o próximo passo no seu projeto?</h3>
+              <p>
+                Estou disponível para projetos pontuais, criação de campanhas completas, showreels e parcerias com agências ou marcas. Escolha o canal de sua preferência:
+              </p>
+
+              <div class="contact-methods">
+                <a href="https://api.whatsapp.com/send?phone=5511999999999&text=Ol%C3%A1%20Diego!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20motion/design." target="_blank" rel="noopener noreferrer" class="contact-method-item">
+                  <div class="contact-method-icon" style="background: #10b981;">💬</div>
+                  <div>
+                    <div class="contact-method-title">WhatsApp Direto</div>
+                    <div class="contact-method-val">Iniciar conversa imediata</div>
+                  </div>
+                </a>
+
+                <a href="mailto:contato@diego.design?subject=Novo%20Projeto%20de%20Design/Motion" class="contact-method-item">
+                  <div class="contact-method-icon">✉️</div>
+                  <div>
+                    <div class="contact-method-title">Email</div>
+                    <div class="contact-method-val">contato@diego.design</div>
+                  </div>
+                </a>
+
+                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="contact-method-item">
+                  <div class="contact-method-icon" style="background: #0057ff;">Bē</div>
+                  <div>
+                    <div class="contact-method-title">Behance</div>
+                    <div class="contact-method-val">Ver Portfólio no Behance</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-form-col">
+              <h4 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 20px;">Envie uma Mensagem Rápida</h4>
+              <form id="quickContactForm">
+                <div class="form-group">
+                  <label class="form-label" for="senderName">Seu Nome ou Empresa</label>
+                  <input type="text" id="senderName" class="form-input" placeholder="Ex: Camila / Agência Lumina" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="senderContact">Email ou Telefone</label>
+                  <input type="text" id="senderContact" class="form-input" placeholder="Ex: seuemail@empresa.com ou WhatsApp" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="senderMsg">Como posso ajudar?</label>
+                  <textarea id="senderMsg" class="form-textarea" placeholder="Conte brevemente sobre o projeto, formato (Reels, comercial, institucional) e prazo estimado..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  <span>Enviar Mensagem</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">
+          &copy; 2026 <strong>Diego</strong> — Designer Multidisciplinar &amp; Motion. Todos os direitos reservados.
+        </div>
+
+        <div class="footer-socials">
+          <a href="#home" class="footer-social-link">Início</a>
+          <a href="#projetos" class="footer-social-link">Projetos</a>
+          <a href="#sobre" class="footer-social-link">Sobre Mim</a>
+          <a href="#contato" class="footer-social-link">Contato</a>
+        </div>
+
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Voltar ao Topo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CINEMATIC MODAL PLAYER PRO MAX -->
+  <div class="modal-backdrop" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+      
+      <!-- Ambient Backlight Bloom -->
+      <div class="modal-ambient-glow" id="modalAmbientGlow"></div>
+
+      <!-- Cabeçalho do Modal com Ações de Navegação -->
+      <div class="modal-header-bar">
+        <div class="modal-header-info">
+          <span class="badge-tag" id="modalCategory">Motion</span>
+          <h3 class="modal-title-text" id="modalTitle">Título do Projeto</h3>
+        </div>
+        <div class="modal-nav-actions">
+          <button class="modal-icon-btn" id="modalShareBtn" title="Copiar link do projeto">🔗</button>
+          <button class="modal-icon-btn" id="modalPrevProjectBtn" title="Projeto Anterior (Seta Esquerda)">&larr;</button>
+          <button class="modal-icon-btn" id="modalNextProjectBtn" title="Próximo Projeto (Seta Direita)">&rarr;</button>
+          <button class="modal-icon-btn modal-close-btn" id="modalCloseBtn" aria-label="Fechar Modal">&times;</button>
+        </div>
+      </div>
+
+      <!-- Barra de Troca de Mídia -->
+      <div class="modal-switcher" id="modalSwitcher"></div>
+
+      <!-- Corpo do Modal -->
+      <div class="modal-body">
+        <div class="modal-player-viewport" id="modalPlayerViewport"></div>
+
+        <div class="modal-details-area">
+          <div>
+            <h4 class="modal-desc-heading">Visão Geral &amp; Direção do Projeto</h4>
+            <p class="modal-desc-paragraph" id="modalFullDesc">
+              Descrição detalhada do projeto...
+            </p>
+            <div id="modalTagsList" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;"></div>
+            <div style="font-size: 0.74rem; color: var(--text-dim); margin-top: 18px;">
+              💡 Dica: Navegue com <strong>&larr;</strong> e <strong>&rarr;</strong> do teclado ou pressione <strong>ESC</strong> para sair.
+            </div>
+          </div>
+
+          <div class="modal-side-meta">
+            <div>
+              <span class="meta-label">Cliente / Empreendimento</span>
+              <div class="meta-val" id="modalClient">Cliente</div>
+            </div>
+            <div>
+              <span class="meta-label">Softwares Utilizados</span>
+              <div id="modalToolsList" style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;"></div>
+            </div>
+            <div style="margin-top: 10px;">
+              <a href="#contato" onclick="closeModal()" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding: 10px 16px;">
+                Solicitar Projeto Semelhante
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast de Notificação -->
+  <div class="toast-msg" id="toastNotification">
+    Mensagem enviada com sucesso!
+  </div>
+
+  <!-- Script Principal -->
+  <script src="main.js"></script>
+</body>
+</html>
