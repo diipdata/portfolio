@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diego | Designer Multidisciplinar &amp; Motion — UI/UX Pro Max</title>
-  <meta name="description" content="Portfólio de Diego — Designer Multidisciplinar, Motion Designer e Editor de Vídeo. Especialista em animações 2D, direção de arte, vídeos imobiliários de alto padrão e campanhas comerciais.">
+  <title>Diego | Motion Designer &amp; Editor de Vídeo</title>
+  <meta name="description" content="Portfólio de Diego — Motion Designer e Editor de Vídeo. Reels verticais, filmes para lançamentos imobiliários, campanhas comerciais e institucionais.">
   <meta name="keywords" content="Diego Designer, Motion Design, Edição de Vídeo, Direção de Arte, After Effects, Premiere Pro, Portfólio, Vídeos Publicitários, Reels, Real Estate">
   <meta name="author" content="Diego">
+  <meta name="theme-color" content="#0a0a0a">
 
-  <!-- Open Graph -->
+  <!-- Open Graph / compartilhamento (WhatsApp, LinkedIn etc.) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Diego | Designer &amp; Motion Portfolio">
-  <meta property="og:description" content="Transformando marcas em experiências visuais memoráveis através de Motion Design, Edição de Vídeo e Direção de Arte.">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Diego | Motion Designer &amp; Editor de Vídeo">
+  <meta property="og:description" content="Reels verticais, filmes imobiliários e campanhas que transformam marcas em experiências visuais memoráveis.">
+  <meta property="og:image" content="assets/media/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Showreel do hero começa a baixar cedo -->
+  <link rel="preload" href="assets/media/showreel-poster.jpg" as="image">
 
   <!-- Google Fonts: Archivo (Títulos) e Space Grotesk (Corpo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,7 +87,7 @@
   <main id="main" tabindex="-1">
     <!-- HERO SECTION PRO MAX -->
     <section class="hero-section" id="home">
-      <div class="container">
+      <div class="container hero-grid">
         <div class="hero-content">
           <div class="hero-pill-wrapper">
             <div class="status-pill">
@@ -95,15 +104,6 @@
             Designer Multidisciplinar especializado em <strong>Motion Design</strong>, <strong>Edição Dinâmica de Vídeo</strong> e <strong>Direção de Arte</strong>. Unindo ritmo visual hipnótico, sofisticação estética e estratégia para marcas que recusam o comum.
           </p>
 
-          <!-- Pílula de Showreel Teaser Rápido -->
-          <button type="button" class="hero-showreel-pill" id="heroShowreelBtn" data-project="verissimo">
-            <span class="mini-play-icon" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-            <span class="showreel-text">Assistir Showreel em Destaque</span>
-            <span class="showreel-badge">Vertical 9:16</span>
-          </button>
-
           <div class="hero-actions">
             <a href="#projetos" class="btn btn-primary">
               <span>Explorar Portfólio</span>
@@ -114,75 +114,69 @@
               <span>Falar no WhatsApp</span>
             </a>
           </div>
+        </div>
 
-          <!-- Barra de Métricas com Contador Animado -->
-          <div class="metrics-strip">
-            <div class="metric-item">
-              <span class="metric-number">+50</span>
-              <span class="metric-label">Projetos Entregues</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-number">5+</span>
-              <span class="metric-label">Anos Criando</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-number">100%</span>
-              <span class="metric-label">Foco em Qualidade</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-number">Top</span>
-              <span class="metric-label">Marcas Atendidas</span>
-            </div>
+        <!-- Showreel vertical: cortes reais dos projetos -->
+        <figure class="hero-reel">
+          <div class="hero-reel-frame">
+            <video id="heroReelVideo" src="assets/media/showreel.mp4" poster="assets/media/showreel-poster.jpg" muted loop playsinline preload="auto" aria-label="Showreel com trechos dos projetos do portfólio"></video>
+            <button type="button" class="hero-reel-toggle" id="heroReelToggle" aria-label="Pausar showreel" aria-pressed="false">
+              <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+              <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption class="hero-reel-caption">
+            <span>Reel · trechos dos projetos abaixo</span>
+            <button type="button" class="hero-reel-link" id="heroFeaturedBtn">
+              Ver case em destaque
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </figcaption>
+        </figure>
+
+        <!-- Barra de Métricas com Contador Animado -->
+        <div class="metrics-strip">
+          <div class="metric-item">
+            <span class="metric-number">+50</span>
+            <span class="metric-label">Projetos Entregues</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">5+</span>
+            <span class="metric-label">Anos Criando</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">12</span>
+            <span class="metric-label">Filmes neste portfólio</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-number">9</span>
+            <span class="metric-label">Clientes &amp; empreendimentos</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MARQUEE INFINITO: FERRAMENTAS & CLIENTES -->
+    <!-- MARQUEE INFINITO: CLIENTES & EMPREENDIMENTOS -->
     <div class="marquee-container" aria-hidden="true">
-      <!-- Linha 1: Ferramentas Criativas (After Effects, Premiere, Photoshop, Illustrator, Blender 3D, DaVinci, Cinema 4D, CapCut, Figma) -->
-      <div class="marquee-track">
-        <span class="marquee-tool-item"><span class="tool-dot dot-ae"></span> After Effects</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-pr"></span> Premiere Pro</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-ps"></span> Photoshop</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-ai"></span> Illustrator</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-bl"></span> Blender 3D</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-dv"></span> DaVinci Resolve</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-c4d"></span> Cinema 4D</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-cc"></span> CapCut Pro</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-fg"></span> Figma</span>
-        <!-- Duplicação para loop contínuo -->
-        <span class="marquee-tool-item"><span class="tool-dot dot-ae"></span> After Effects</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-pr"></span> Premiere Pro</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-ps"></span> Photoshop</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-ai"></span> Illustrator</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-bl"></span> Blender 3D</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-dv"></span> DaVinci Resolve</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-c4d"></span> Cinema 4D</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-cc"></span> CapCut Pro</span>
-        <span class="marquee-tool-item"><span class="tool-dot dot-fg"></span> Figma</span>
-      </div>
-
-      <!-- Linha 2: Projetos & Clientes Atendidos (Em direção reversa) -->
       <div class="marquee-track-reverse">
-        <span class="marquee-item">Veríssimo <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Veríssimo Freitas <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Ibyte Tecnologia <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Emape Institucional <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Metropolitan Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Emape Alimentos <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Anne Metropolitan <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">IPM Impacto Social <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Top Mooca <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">MADAI Residence <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Alidença <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Aliderança <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Vilma Constantino <span class="marquee-bullet">✦</span></span>
         <!-- Duplicação para loop contínuo -->
-        <span class="marquee-item">Veríssimo <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Veríssimo Freitas <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Ibyte Tecnologia <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Emape Institucional <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Metropolitan Residence <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Emape Alimentos <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Anne Metropolitan <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">IPM Impacto Social <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Top Mooca <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">MADAI Residence <span class="marquee-bullet">✦</span></span>
-        <span class="marquee-item">Alidença <span class="marquee-bullet">✦</span></span>
+        <span class="marquee-item">Aliderança <span class="marquee-bullet">✦</span></span>
         <span class="marquee-item">Vilma Constantino <span class="marquee-bullet">✦</span></span>
       </div>
     </div>
@@ -194,7 +188,7 @@
           <span class="section-tag">Portfólio Selecionado</span>
           <h2 class="section-title">Trabalhos em <span class="text-gradient">Destaque</span></h2>
           <p class="section-description">
-            Passe o mouse sobre os cards para pré-visualizar trechos de vídeo ou abra qualquer projeto no leitor cinematográfico em alta resolução.
+            A maior parte do trabalho nasce vertical, feita para Reels e Stories. Passe o mouse para pré-visualizar ou abra o case completo.
           </p>
         </div>
 
@@ -476,6 +470,7 @@
           <a href="#projetos" class="footer-social-link">Projetos</a>
           <a href="#sobre" class="footer-social-link">Sobre Mim</a>
           <a href="#contato" class="footer-social-link">Contato</a>
+          <a href="https://www.behance.net/diipmotion" target="_blank" rel="noopener noreferrer" class="footer-social-link">Behance ↗</a>
         </nav>
 
         <button type="button" class="back-to-top" id="backToTopBtn" aria-label="Voltar ao topo">
@@ -538,6 +533,16 @@
             <div>
               <span class="meta-label">Cliente / Empreendimento</span>
               <div class="meta-val" id="modalClient">Cliente</div>
+            </div>
+            <div class="meta-pair">
+              <div>
+                <span class="meta-label">Entregas</span>
+                <div class="meta-val" id="modalDeliverables"></div>
+              </div>
+              <div>
+                <span class="meta-label">Formato</span>
+                <div class="meta-val" id="modalFormat"></div>
+              </div>
             </div>
             <div>
               <span class="meta-label">Softwares Utilizados</span>

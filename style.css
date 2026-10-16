@@ -2117,14 +2117,15 @@ body {
   .modal-title-text { font-size: 1.05rem; }
   .modal-nav-actions { gap: 6px; }
   .modal-player-viewport { height: clamp(200px, 50vh, 420px); }
-  /* No toque, a lista de mídias vira uma faixa deslizável com snap */
-  .modal-switcher {
+  /* No toque, cada grupo de mídias vira uma faixa deslizável com snap */
+  .modal-switcher { padding: 10px 14px; }
+  .media-group-list {
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    padding: 10px 14px;
+    padding-bottom: 4px;
   }
-  .modal-switch-btn { scroll-snap-align: start; }
+  .modal-switch-btn { scroll-snap-align: start; flex-shrink: 0; }
   .modal-details-area { grid-template-columns: 1fr; padding: 22px 18px; gap: 22px; }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-socials { flex-wrap: wrap; justify-content: center; }
@@ -2136,6 +2137,271 @@ body {
   .filter-tabs { border-radius: var(--radius-lg); }
   .filter-btn { padding: 10px 14px; font-size: 0.85rem; }
   .modal-header-info .badge-tag { display: none; }
+}
+
+/* ==========================================================================
+   ESTRUTURA: hero com showreel, case em destaque, cards verticais, modal
+   ========================================================================== */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+}
+
+.hero-grid .metrics-strip {
+  grid-column: 1 / -1;
+}
+
+.hero-grid .hero-content {
+  min-width: 0;
+}
+
+.hero-reel {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(280px, 78vw);
+}
+
+.hero-reel-frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.hero-reel-frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-reel-toggle {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-medium);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+}
+
+.hero-reel-toggle .icon-play,
+.hero-reel-toggle.is-paused .icon-pause {
+  display: none;
+}
+
+.hero-reel-toggle.is-paused .icon-play {
+  display: block;
+}
+
+.hero-reel-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.hero-reel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--touch-target);
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 330px);
+    align-items: center;
+    column-gap: 64px;
+  }
+  .hero-reel {
+    width: 100%;
+  }
+}
+
+/* Cards: grade uniforme em 4:5 (o material é majoritariamente vertical) */
+.project-card:not(.is-featured) .card-media-wrapper {
+  aspect-ratio: 4 / 5;
+  max-height: none;
+}
+
+.card-meta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Case em destaque: ocupa a linha inteira, mídia vertical + ficha do projeto */
+.project-card.is-featured {
+  grid-column: 1 / -1;
+}
+
+.project-card.is-featured .card-media-wrapper {
+  aspect-ratio: 4 / 5;
+}
+
+.featured-kicker {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 10px;
+}
+
+.project-card.is-featured .card-title {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.project-card.is-featured .card-desc {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  max-width: 60ch;
+}
+
+.featured-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 28px;
+  margin-bottom: 28px;
+}
+
+.featured-facts dt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.featured-facts dd {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.featured-cta {
+  align-self: flex-start;
+  white-space: normal;
+}
+
+@media (max-width: 479px) {
+  .featured-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .featured-facts dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (min-width: 768px) {
+  .project-card.is-featured {
+    flex-direction: row;
+  }
+  .project-card.is-featured .card-media-wrapper {
+    flex: 0 0 clamp(240px, 32%, 360px);
+    aspect-ratio: 9 / 16;
+  }
+  .project-card.is-featured .card-content {
+    justify-content: center;
+    padding: clamp(28px, 4vw, 56px);
+  }
+}
+
+/* Modal: grupos de mídia (filmes em chips, imagens em miniaturas) */
+.modal-switcher {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.media-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.media-group-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.media-group-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-switch-btn.is-thumb {
+  width: 96px;
+  height: 60px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.modal-switch-btn.is-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-switch-btn.is-thumb.active {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.meta-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* Mídia vertical no desktop: player alto à esquerda, detalhes à direita */
+@media (min-width: 900px) {
+  .modal-body.is-vertical {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+  .modal-body.is-vertical .modal-player-viewport {
+    height: min(76vh, 720px);
+    width: calc(min(76vh, 720px) * 9 / 16);
+  }
+  .modal-body.is-vertical .modal-details-area {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
 }
 
 /* Dispositivos sem hover: sem efeitos de hover pegajosos */
