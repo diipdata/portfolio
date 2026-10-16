@@ -141,6 +141,27 @@ const portfolioProjects = [
   }
 ];
 
+// Ícone de cada ferramenta (símbolos do sprite em index.html; CapCut usa máscara CSS)
+const TOOL_ICONS = {
+  "After Effects": "tool-ae",
+  "Premiere Pro": "tool-pr",
+  "Photoshop": "tool-ps",
+  "Illustrator": "tool-ai",
+  "Blender 3D": "tool-bl",
+  "Cinema 4D": "tool-c4d",
+  "DaVinci Resolve": "tool-dv",
+  "Figma": "tool-fg",
+  "CapCut Pro": "tool-cc"
+};
+
+function toolTagMarkup(tool) {
+  const id = TOOL_ICONS[tool];
+  let icon = "";
+  if (id === "tool-cc") icon = `<span class="tool-icon tool-cc" aria-hidden="true"></span>`;
+  else if (id) icon = `<svg class="tool-icon ${id}" aria-hidden="true"><use href="#${id}"/></svg>`;
+  return `<span class="tool-tag">${icon}${tool}</span>`;
+}
+
 // Ids antigos continuam funcionando em links compartilhados
 const PROJECT_ID_ALIASES = { alidenca: "alideranca" };
 
@@ -672,7 +693,7 @@ function updateModalContent() {
   if (modalFormat) modalFormat.textContent = getFormatLabel(project);
 
   if (modalToolsList) {
-    modalToolsList.innerHTML = project.tools.map(t => `<span class="tool-tag">${t}</span>`).join(" ");
+    modalToolsList.innerHTML = project.tools.map(toolTagMarkup).join(" ");
   }
 
   if (modalTagsList) {

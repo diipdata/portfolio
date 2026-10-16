@@ -80,7 +80,7 @@ button {
 h1, h2, h3, h4 {
   text-wrap: balance;
   overflow-wrap: break-word;
-  hyphens: auto;
+  hyphens: manual;
 }
 
 p {
@@ -1427,10 +1427,34 @@ body {
   transform: translateY(-2px);
 }
 
-.software-pill span.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+/* Ícones oficiais das ferramentas (sprite no index.html) */
+.tool-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.tool-tag .tool-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+
+.tool-ae, .tool-pr { color: #9999ff; }
+.tool-ps { color: #31a8ff; }
+.tool-ai { color: #ff9a00; }
+.tool-bl { color: #e87d0d; }
+.tool-fg { color: #f24e1e; }
+/* Cores oficiais do Cinema 4D e DaVinci são escuras demais para o fundo: usa o texto do tema */
+.tool-c4d, .tool-dv { color: var(--text-main); }
+
+/* CapCut não está no Simple Icons: usa o PNG do projeto como máscara */
+.tool-cc {
+  background-color: var(--text-main);
+  -webkit-mask: url("assets/media/icons/capcut.png") center / contain no-repeat;
+  mask: url("assets/media/icons/capcut.png") center / contain no-repeat;
 }
 
 /* Processo */
