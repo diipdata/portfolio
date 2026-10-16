@@ -142,6 +142,18 @@ let activeModalProjectIndex = 0;
 let activeMediaIndex = 0;
 let soundEnabled = false;
 let audioCtx = null;
+let lastFocusedBeforeModal = null;
+
+// Preferencias do usuario / capacidades do dispositivo
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+const prefersReducedMotion = () => reducedMotionQuery.matches;
+const canHover = () => finePointerQuery.matches;
+
+const ICONS = {
+  video: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8l-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>',
+  image: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>'
+};
 
 // Audio Sintetizado com Web Audio API
 function initAudio() {
@@ -190,6 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupNumberCounters();
   setupAudioToggle();
   setupToolPills();
+  setupHeroShowreel();
+  setupBackToTop();
+  openProjectFromHash();
 });
 
 // Renderizacao dos Projetos com Spotlight e Scrub
@@ -203,34 +218,37 @@ function renderProjects() {
 
   grid.innerHTML = "";
 
+  if (filtered.length === 0) {
+    grid.innerHTML = `<p class="projects-empty">Nenhum projeto nesta categoria ainda.</p>`;
+    return;
+  }
+
   filtered.forEach(project => {
     const card = document.createElement("article");
     card.className = "project-card";
     card.setAttribute("data-id", project.id);
     card.id = `project-card-${project.id}`;
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Abrir projeto: ${project.title}`);
 
-    let mediaMarkup = "";
-    if (project.coverImage) {
-      mediaMarkup = `
-        <img class="card-media" src="${project.coverImage}" alt="${project.title}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <video class="card-media card-video-preview" src="${project.primaryVideo}" preload="metadata" muted playsinline loop style="display:none;"></video>
-      `;
-    } else {
-      mediaMarkup = `<video class="card-media card-video-preview" src="${project.primaryVideo}" preload="metadata" muted playsinline loop></video>`;
-    }
+    // Imagem de capa; o video de preview so e criado em dispositivos com hover
+    const mediaMarkup = project.coverImage
+      ? `<img class="card-media" src="${project.coverImage}" alt="" loading="lazy" decoding="async" />`
+      : `<video class="card-media card-video-preview" src="${project.primaryVideo}" preload="metadata" muted playsinline loop aria-hidden="true"></video>`;
 
     const toolsMarkup = project.tools.map(t => `<span class="tool-tag">${t}</span>`).join("");
 
     card.innerHTML = `
       <div class="card-media-wrapper ${project.aspectRatioClass}">
         ${mediaMarkup}
-        <div class="card-video-progress"></div>
+        <div class="card-video-progress" aria-hidden="true"></div>
         <div class="card-badge-top">
           <span class="badge-tag">${project.categoryLabel}</span>
           <span class="badge-format">${project.formatBadge}</span>
         </div>
-        <div class="media-overlay">
-          <div class="play-circle" title="Assistir Projeto">
+        <div class="media-overlay" aria-hidden="true">
+          <div class="play-circle">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
@@ -242,65 +260,116 @@ function renderProjects() {
           <div class="card-tools">
             ${toolsMarkup}
           </div>
-          <span class="card-link-text">
+          <span class="card-link-text" aria-hidden="true">
             Explorar
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </span>
         </div>
       </div>
     `;
 
-    // Interacao de Hover com Video e Barra de Progresso
-    const videoPreview = card.querySelector(".card-video-preview");
-    const progressBar = card.querySelector(".card-video-progress");
-    let progressInterval = null;
-
-    if (videoPreview) {
-      card.addEventListener("mouseenter", () => {
-        playUiSound(750, 0.02);
-        try {
-          videoPreview.currentTime = 0;
-          videoPreview.play().catch(() => {});
-          if (progressBar) {
-            progressInterval = setInterval(() => {
-              if (videoPreview.duration) {
-                const pct = (videoPreview.currentTime / videoPreview.duration) * 100;
-                progressBar.style.width = `${pct}%`;
-              }
-            }, 100);
-          }
-        } catch (e) {}
-      });
-
-      card.addEventListener("mouseleave", () => {
-        try {
-          videoPreview.pause();
-          if (progressInterval) clearInterval(progressInterval);
-          if (progressBar) progressBar.style.width = "0%";
-        } catch (e) {}
-      });
+    // Se a capa falhar, cai para o video
+    const coverImg = card.querySelector("img.card-media");
+    if (coverImg) {
+      coverImg.addEventListener("error", () => {
+        const fallback = document.createElement("video");
+        fallback.className = "card-media card-video-preview";
+        fallback.src = project.primaryVideo;
+        fallback.preload = "metadata";
+        fallback.muted = true;
+        fallback.playsInline = true;
+        fallback.loop = true;
+        fallback.setAttribute("aria-hidden", "true");
+        coverImg.replaceWith(fallback);
+      }, { once: true });
     }
 
-    // Clique abre o modal
-    card.addEventListener("click", () => {
+    // Preview de video no hover (apenas mouse e sem reduced-motion)
+    if (canHover() && !prefersReducedMotion()) {
+      setupCardPreview(card, project);
+    }
+
+    // Clique ou Enter/Espaco abre o modal
+    const open = () => {
       playUiSound(950, 0.04);
       openProjectModal(project.id);
+    };
+    card.addEventListener("click", open);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
     });
 
     grid.appendChild(card);
   });
 }
 
-// Spotlight Mouse Tracker nos Cards
+// Preview de video com barra de progresso, criado sob demanda no primeiro hover
+function setupCardPreview(card, project) {
+  const wrapper = card.querySelector(".card-media-wrapper");
+  const progressBar = card.querySelector(".card-video-progress");
+
+  const trackProgress = (video) => {
+    if (video.dataset.tracked) return;
+    video.dataset.tracked = "1";
+    video.addEventListener("timeupdate", () => {
+      if (progressBar && video.duration) {
+        progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
+      }
+    });
+  };
+
+  // Usa o video existente (card sem capa) ou cria um sobreposto a capa
+  const getVideo = () => {
+    let video = card.querySelector(".card-video-preview");
+    if (!video) {
+      video = document.createElement("video");
+      video.className = "card-media card-video-preview is-overlay";
+      video.src = project.primaryVideo;
+      video.preload = "none";
+      video.muted = true;
+      video.playsInline = true;
+      video.loop = true;
+      video.setAttribute("aria-hidden", "true");
+      wrapper.insertBefore(video, progressBar);
+    }
+    trackProgress(video);
+    return video;
+  };
+
+  card.addEventListener("mouseenter", () => {
+    playUiSound(750, 0.02);
+    const video = getVideo();
+    video.currentTime = 0;
+    video.play().then(() => video.classList.add("is-playing")).catch(() => {});
+  });
+
+  card.addEventListener("mouseleave", () => {
+    const video = card.querySelector(".card-video-preview");
+    if (!video) return;
+    video.pause();
+    video.classList.remove("is-playing");
+    if (progressBar) progressBar.style.width = "0%";
+  });
+}
+
+// Spotlight Mouse Tracker nos Cards (throttle por frame)
 function setupSpotlightTracker() {
-  document.addEventListener("mousemove", (e) => {
-    const cards = document.querySelectorAll(".project-card, .process-card, .photo-card, .contact-box");
-    cards.forEach(card => {
+  if (!canHover()) return;
+  const grid = document.getElementById("projectsGrid");
+  if (!grid) return;
+
+  let frame = null;
+  grid.addEventListener("mousemove", (e) => {
+    const card = e.target.closest(".project-card");
+    if (!card || frame) return;
+    frame = requestAnimationFrame(() => {
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty("--spotlight-x", `${x}px`);
-      card.style.setProperty("--spotlight-y", `${y}px`);
+      card.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+      card.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+      frame = null;
     });
   });
 }
@@ -308,17 +377,26 @@ function setupSpotlightTracker() {
 // Mouse Follower Suave
 function setupMouseFollower() {
   const follower = document.querySelector(".mouse-follower");
-  if (!follower) return;
+  if (!follower || !canHover() || prefersReducedMotion()) return;
 
+  let frame = null;
+  let x = 0;
+  let y = 0;
   window.addEventListener("mousemove", (e) => {
-    follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-  });
+    x = e.clientX;
+    y = e.clientY;
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      follower.style.transform = `translate(${x}px, ${y}px)`;
+      frame = null;
+    });
+  }, { passive: true });
 }
 
 // 3D Tilt no Cartao da Foto de Perfil
 function setup3DTilt() {
   const card = document.querySelector(".photo-card");
-  if (!card) return;
+  if (!card || !canHover() || prefersReducedMotion()) return;
 
   card.addEventListener("mousemove", (e) => {
     const rect = card.getBoundingClientRect();
@@ -337,7 +415,7 @@ function setup3DTilt() {
 // Contadores de Metricas Animados
 function setupNumberCounters() {
   const strip = document.querySelector(".metrics-strip");
-  if (!strip) return;
+  if (!strip || prefersReducedMotion() || !("IntersectionObserver" in window)) return;
 
   let animated = false;
   const observer = new IntersectionObserver((entries) => {
@@ -377,8 +455,9 @@ function setupAudioToggle() {
   btn.addEventListener("click", () => {
     soundEnabled = !soundEnabled;
     btn.classList.toggle("sound-on", soundEnabled);
-    btn.title = soundEnabled ? "Som da interface: Ativado" : "Som da interface: Desativado";
-    showToast(soundEnabled ? "🔊 Som da interface ativado!" : "🔇 Som da interface silenciado.");
+    btn.setAttribute("aria-pressed", String(soundEnabled));
+    btn.title = soundEnabled ? "Som da interface: ativado" : "Som da interface: desativado";
+    showToast(soundEnabled ? "Som da interface ativado." : "Som da interface silenciado.");
     if (soundEnabled) playUiSound(880, 0.05);
   });
 }
@@ -389,12 +468,43 @@ function setupFilterTabs() {
   filterBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       playUiSound(700, 0.02);
-      filterBtns.forEach(b => b.classList.remove("active"));
+      filterBtns.forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
       currentFilter = btn.getAttribute("data-filter");
       renderProjects();
     });
   });
+}
+
+// Pilula de Showreel no Hero
+function setupHeroShowreel() {
+  const btn = document.getElementById("heroShowreelBtn");
+  btn?.addEventListener("click", () => {
+    playUiSound(950, 0.04);
+    openProjectModal(btn.dataset.project);
+  });
+}
+
+// Botao Voltar ao Topo
+function setupBackToTop() {
+  document.getElementById("backToTopBtn")?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+    document.getElementById("navLogo")?.focus({ preventScroll: true });
+  });
+}
+
+// Link direto para um projeto (#projeto=<id>)
+function getProjectShareUrl(project) {
+  return `${window.location.origin}${window.location.pathname}#projeto=${project.id}`;
+}
+
+function openProjectFromHash() {
+  const match = window.location.hash.match(/^#projeto=([\w-]+)$/);
+  if (match) openProjectModal(match[1]);
 }
 
 // Modal Cinematografico Pro Max
@@ -411,16 +521,24 @@ function setupModalEvents() {
   prevBtn?.addEventListener("click", () => navigateProject(-1));
   nextBtn?.addEventListener("click", () => navigateProject(1));
 
-  shareBtn?.addEventListener("click", () => {
+  shareBtn?.addEventListener("click", async () => {
     playUiSound(800, 0.03);
     const project = portfolioProjects[activeModalProjectIndex];
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      showToast(`Link de "${project.title}" copiado para a área de transferência!`);
-    } else {
-      showToast(`Compartilhando projeto: ${project.title}`);
+    const url = getProjectShareUrl(project);
+    try {
+      if (navigator.share && !canHover()) {
+        await navigator.share({ title: project.title, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      showToast(`Link de "${project.title}" copiado.`);
+    } catch (e) {
+      if (e && e.name === "AbortError") return;
+      showToast("Não foi possível copiar o link automaticamente.");
     }
   });
+
+  document.getElementById("modalContactCta")?.addEventListener("click", () => closeModal({ restoreFocus: false }));
 
   backdrop.addEventListener("click", (e) => {
     if (e.target === backdrop) closeModal();
@@ -429,9 +547,29 @@ function setupModalEvents() {
   window.addEventListener("keydown", (e) => {
     if (!backdrop.classList.contains("active")) return;
     if (e.key === "Escape") closeModal();
-    if (e.key === "ArrowLeft") navigateProject(-1);
-    if (e.key === "ArrowRight") navigateProject(1);
+    if (e.key === "Tab") trapModalFocus(e);
+
+    // Setas so navegam entre projetos quando o foco nao esta no player de video
+    const inMedia = e.target instanceof HTMLVideoElement;
+    if (!inMedia && e.key === "ArrowLeft") navigateProject(-1);
+    if (!inMedia && e.key === "ArrowRight") navigateProject(1);
   });
+}
+
+function trapModalFocus(e) {
+  const container = document.querySelector("#projectModal .modal-container");
+  const focusables = [...container.querySelectorAll('button, [href], video[controls], [tabindex]:not([tabindex="-1"])')]
+    .filter(el => el.offsetParent !== null);
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 }
 
 function openProjectModal(projectId) {
@@ -443,8 +581,12 @@ function openProjectModal(projectId) {
   updateModalContent();
 
   const backdrop = document.getElementById("projectModal");
+  if (!backdrop.classList.contains("active")) {
+    lastFocusedBeforeModal = document.activeElement;
+  }
   backdrop.classList.add("active");
   document.body.style.overflow = "hidden";
+  document.getElementById("modalCloseBtn")?.focus();
 }
 
 function navigateProject(direction) {
@@ -496,13 +638,20 @@ function renderModalSwitcher(project) {
 
   project.mediaItems.forEach((item, index) => {
     const btn = document.createElement("button");
-    btn.className = `modal-switch-btn ${index === activeMediaIndex ? "active" : ""}`;
-    const icon = item.type === "video" ? "🎬 " : "🖼️ ";
-    btn.textContent = `${icon}${item.title}`;
+    btn.type = "button";
+    const isActive = index === activeMediaIndex;
+    btn.className = `modal-switch-btn ${isActive ? "active" : ""}`;
+    btn.setAttribute("aria-pressed", String(isActive));
+    btn.innerHTML = `${ICONS[item.type] || ""}<span></span>`;
+    btn.querySelector("span").textContent = item.title;
     btn.addEventListener("click", () => {
       playUiSound(720, 0.02);
-      document.querySelectorAll(".modal-switch-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".modal-switch-btn").forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
       loadModalMedia(index);
     });
     switcher.appendChild(btn);
@@ -532,15 +681,15 @@ function loadModalMedia(index) {
     }
   } else {
     viewport.innerHTML = `
-      <img src="${item.src}" alt="${item.title}" />
+      <img src="${item.src}" alt="${project.title} — ${item.title}" decoding="async" />
     `;
   }
 }
 
-function closeModal() {
+function closeModal({ restoreFocus = true } = {}) {
   playUiSound(500, 0.03);
   const backdrop = document.getElementById("projectModal");
-  if (!backdrop) return;
+  if (!backdrop || !backdrop.classList.contains("active")) return;
 
   const v = document.getElementById("activeModalVideo");
   if (v) {
@@ -553,6 +702,15 @@ function closeModal() {
 
   backdrop.classList.remove("active");
   document.body.style.overflow = "";
+
+  if (window.location.hash.startsWith("#projeto=")) {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  if (restoreFocus && lastFocusedBeforeModal && document.contains(lastFocusedBeforeModal)) {
+    lastFocusedBeforeModal.focus();
+  }
+  lastFocusedBeforeModal = null;
 }
 
 // Carregador de Foto com Fallback
@@ -615,15 +773,32 @@ function setupMobileNav() {
   const navLinks = document.getElementById("navLinks");
   if (!btn || !navLinks) return;
 
+  const setOpen = (open) => {
+    navLinks.classList.toggle("mobile-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+  };
+
   btn.addEventListener("click", () => {
     playUiSound(600, 0.02);
-    navLinks.classList.toggle("mobile-open");
+    setOpen(!navLinks.classList.contains("mobile-open"));
   });
 
   navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("mobile-open");
-    });
+    link.addEventListener("click", () => setOpen(false));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navLinks.classList.contains("mobile-open")) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (navLinks.classList.contains("mobile-open") && !e.target.closest(".nav-container")) {
+      setOpen(false);
+    }
   });
 }
 
@@ -631,23 +806,28 @@ function setupMobileNav() {
 function setupSmoothScroll() {
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-links a");
+  let frame = null;
 
-  window.addEventListener("scroll", () => {
+  const update = () => {
+    frame = null;
     let current = "";
     sections.forEach(sec => {
-      const secTop = sec.offsetTop - 130;
-      if (window.scrollY >= secTop) {
+      if (window.scrollY >= sec.offsetTop - 130) {
         current = sec.getAttribute("id");
       }
     });
 
     navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === `#${current}`) {
-        link.classList.add("active");
-      }
+      const isActive = link.getAttribute("href") === `#${current}`;
+      link.classList.toggle("active", isActive);
+      if (isActive) link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
     });
-  });
+  };
+
+  window.addEventListener("scroll", () => {
+    if (!frame) frame = requestAnimationFrame(update);
+  }, { passive: true });
 }
 
 // Feedback Toast
@@ -669,21 +849,46 @@ function setupContactForm() {
   const form = document.getElementById("quickContactForm");
   if (!form) return;
 
+  const fields = ["senderName", "senderContact", "senderMsg"].map(id => document.getElementById(id));
+
+  const validateField = (field) => {
+    const error = document.getElementById(`${field.id}Error`);
+    const valid = field.value.trim().length > 0;
+    field.setAttribute("aria-invalid", String(!valid));
+    if (error) error.hidden = valid;
+    return valid;
+  };
+
+  // Valida ao sair do campo e limpa o erro enquanto o usuario corrige
+  fields.forEach(field => {
+    field.addEventListener("blur", () => {
+      if (field.hasAttribute("aria-invalid")) validateField(field);
+    });
+    field.addEventListener("input", () => {
+      if (field.getAttribute("aria-invalid") === "true") validateField(field);
+    });
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    const invalid = fields.filter(f => !validateField(f));
+    if (invalid.length) {
+      invalid[0].focus();
+      return;
+    }
+
     playUiSound(880, 0.05);
 
-    const name = document.getElementById("senderName")?.value || "Cliente";
-    const msg = document.getElementById("senderMsg")?.value || "";
+    const [name, contact, msg] = fields.map(f => f.value.trim());
+    const phone = "5511961689536";
+    const text = `Olá Diego! Meu nome é ${name} (${contact}). Gostaria de falar sobre um projeto: ${msg}`;
+    const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
 
-    showToast(`Obrigado, ${name}! Mensagem enviada com sucesso.`);
-
-    const phone = "5511999999999";
-    const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(`Olá Diego! Meu nome é ${name}. Gostaria de falar sobre um projeto: ${msg}`)}`;
-    
-    const waBtn = document.getElementById("heroWaBtn");
-    if (waBtn) waBtn.href = waUrl;
+    window.open(waUrl, "_blank", "noopener");
+    showToast(`Obrigado, ${name}! Abrimos o WhatsApp com sua mensagem pronta para enviar.`);
 
     form.reset();
+    fields.forEach(f => f.removeAttribute("aria-invalid"));
   });
 }

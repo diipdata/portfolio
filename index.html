@@ -23,6 +23,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Pular para o conteúdo</a>
+
   <!-- Cursor Ambient Follower (Luz de Destaque) -->
   <div class="mouse-follower" aria-hidden="true"></div>
 
@@ -39,7 +41,7 @@
     <div class="container">
       <nav class="nav-container" aria-label="Navegação Principal">
         <a href="#home" class="brand-logo" id="navLogo">
-          <div class="logo-badge">D</div>
+          <div class="logo-badge" aria-hidden="true">D</div>
           <div class="logo-text">
             <span class="logo-name">DIEGO</span>
             <span class="logo-tag">MOTION &amp; DESIGN</span>
@@ -47,7 +49,7 @@
         </a>
 
         <ul class="nav-links" id="navLinks">
-          <li><a href="#home" class="active">Início</a></li>
+          <li><a href="#home" class="active" aria-current="true">Início</a></li>
           <li><a href="#projetos">Projetos</a></li>
           <li><a href="#sobre">Sobre Mim</a></li>
           <li><a href="#processo">Processo</a></li>
@@ -56,28 +58,30 @@
 
         <div class="nav-actions">
           <!-- Botão de Áudio Sintetizado UI -->
-          <button class="audio-toggle-btn" id="audioToggleBtn" title="Ativar Som da Interface" aria-label="Ativar ou desativar som da interface">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <button type="button" class="audio-toggle-btn" id="audioToggleBtn" title="Som da interface: desativado" aria-label="Som da interface" aria-pressed="false">
+            <svg class="icon-sound-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+            <svg class="icon-sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
           </button>
 
           <a href="#contato" class="btn btn-primary nav-cta">Falar Comigo</a>
 
-          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+            <svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
         </div>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <!-- HERO SECTION PRO MAX -->
     <section class="hero-section" id="home">
       <div class="container">
         <div class="hero-content">
           <div class="hero-pill-wrapper">
             <div class="status-pill">
-              <span class="pulse-dot"></span>
+              <span class="pulse-dot" aria-hidden="true"></span>
               <span>Disponível para novos projetos &amp; parcerias</span>
             </div>
           </div>
@@ -91,19 +95,21 @@
           </p>
 
           <!-- Pílula de Showreel Teaser Rápido -->
-          <div class="hero-showreel-pill" onclick="openProjectModal('verissimo')" title="Clique para assistir ao reel em destaque">
-            <span class="mini-play-icon">▶</span>
+          <button type="button" class="hero-showreel-pill" id="heroShowreelBtn" data-project="verissimo">
+            <span class="mini-play-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
             <span class="showreel-text">Assistir Showreel em Destaque</span>
             <span class="showreel-badge">Vertical 9:16</span>
-          </div>
+          </button>
 
           <div class="hero-actions">
             <a href="#projetos" class="btn btn-primary">
               <span>Explorar Portfólio</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
             </a>
-            <a href="https://api.whatsapp.com/send?phone=5511999999999&text=Ol%C3%A1%20Diego!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" id="heroWaBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            <a href="https://api.whatsapp.com/send?phone=5511961689536&text=Ol%C3%A1%20Diego!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" id="heroWaBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
               <span>Falar no WhatsApp</span>
             </a>
           </div>
@@ -187,31 +193,31 @@
           <span class="section-tag">Portfólio Selecionado</span>
           <h2 class="section-title">Trabalhos em <span class="text-gradient">Destaque</span></h2>
           <p class="section-description">
-            Passe o mouse sobre os cards para pré-visualizar trechos de vídeo ou clique para abrir o leitor cinematográfico em alta resolução.
+            Passe o mouse sobre os cards para pré-visualizar trechos de vídeo ou abra qualquer projeto no leitor cinematográfico em alta resolução.
           </p>
         </div>
 
         <!-- Abas de Filtros com Estilo Cápsula -->
         <div class="filter-tabs-wrapper">
-          <div class="filter-tabs" id="filterTabs">
-            <button class="filter-btn active" data-filter="all">Todos os Projetos</button>
-            <button class="filter-btn" data-filter="motion">Motion &amp; Reels</button>
-            <button class="filter-btn" data-filter="imobiliario">Imobiliário &amp; Vídeo</button>
-            <button class="filter-btn" data-filter="comercial">Comercial &amp; Varejo</button>
-            <button class="filter-btn" data-filter="institucional">Institucional</button>
-            <button class="filter-btn" data-filter="social">Impacto Social</button>
+          <div class="filter-tabs" id="filterTabs" role="group" aria-label="Filtrar projetos por categoria">
+            <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">Todos os Projetos</button>
+            <button type="button" class="filter-btn" data-filter="motion" aria-pressed="false">Motion &amp; Reels</button>
+            <button type="button" class="filter-btn" data-filter="imobiliario" aria-pressed="false">Imobiliário &amp; Vídeo</button>
+            <button type="button" class="filter-btn" data-filter="comercial" aria-pressed="false">Comercial &amp; Varejo</button>
+            <button type="button" class="filter-btn" data-filter="institucional" aria-pressed="false">Institucional</button>
+            <button type="button" class="filter-btn" data-filter="social" aria-pressed="false">Impacto Social</button>
           </div>
         </div>
 
         <!-- Grade de Cards Dinâmicos com Spotlight -->
-        <div class="projects-grid" id="projectsGrid">
+        <div class="projects-grid" id="projectsGrid" aria-live="polite">
           <!-- Injetado via main.js -->
         </div>
       </div>
     </section>
 
     <!-- SEÇÃO SOBRE MIM PRO MAX COM 3D TILT -->
-    <section class="section-padding" id="sobre" style="background: rgba(8, 10, 16, 0.45);">
+    <section class="section-padding section-tinted" id="sobre">
       <div class="container">
         <div class="about-grid">
           
@@ -219,11 +225,11 @@
           <div class="about-photo-wrapper">
             <div class="photo-card" id="photoCard">
               <div class="profile-img-container">
-                <img id="profilePhotoImg" class="profile-img" src="assets/images/profile/perfil.jpg" alt="Diego - Designer &amp; Motion">
+                <img id="profilePhotoImg" class="profile-img" src="assets/images/profile/perfil.jpg" alt="Retrato de Diego, designer e motion designer" width="440" height="493" loading="lazy" decoding="async">
               </div>
               <div class="photo-status-badge">
                 <div class="status-left-group">
-                  <span class="status-dot-green"></span>
+                  <span class="status-dot-green" aria-hidden="true"></span>
                   <span class="status-badge-text">Diego // Motion &amp; Art</span>
                 </div>
                 <div class="status-timezone-badge">GMT-3 • Brasil</div>
@@ -249,13 +255,15 @@
 
             <!-- Competências Principais -->
             <h3 class="about-skills-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
               Especialidades &amp; Habilidades
             </h3>
 
             <div class="skills-grid">
               <div class="skill-card-mini">
-                <div class="skill-icon-box">⚡</div>
+                <div class="skill-icon-box" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
                 <div>
                   <div class="skill-title-mini">Motion Graphics 2D</div>
                   <div class="skill-sub-mini">Animações de logo, tipografia cinética e vinhetas</div>
@@ -263,7 +271,9 @@
               </div>
 
               <div class="skill-card-mini">
-                <div class="skill-icon-box">🎬</div>
+                <div class="skill-icon-box" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg>
+                </div>
                 <div>
                   <div class="skill-title-mini">Edição Dinâmica &amp; Ritmo</div>
                   <div class="skill-sub-mini">Montagem rítmica, cortes rápidos e retenção</div>
@@ -271,7 +281,9 @@
               </div>
 
               <div class="skill-card-mini">
-                <div class="skill-icon-box">🏢</div>
+                <div class="skill-icon-box" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></svg>
+                </div>
                 <div>
                   <div class="skill-title-mini">Campanhas Imobiliárias</div>
                   <div class="skill-sub-mini">Motion tracking, pranchas e vídeos comerciais</div>
@@ -279,7 +291,9 @@
               </div>
 
               <div class="skill-card-mini">
-                <div class="skill-icon-box">🔊</div>
+                <div class="skill-icon-box" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3M6 6v11M10 3v18M14 8v7M18 5v13M22 10v3"/></svg>
+                </div>
                 <div>
                   <div class="skill-title-mini">Sound Design &amp; Color</div>
                   <div class="skill-sub-mini">Sincronização sonora e tratamento de cor</div>
@@ -289,19 +303,19 @@
 
             <!-- Softwares & Ferramentas Interativas -->
             <h3 class="about-skills-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              Ferramentas Criativas <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 400;">(clique para ver detalhes)</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              Ferramentas Criativas <span class="about-skills-hint">(toque para ver detalhes)</span>
             </h3>
 
             <div class="software-stack">
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ae"></span> After Effects</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-pr"></span> Premiere Pro</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ps"></span> Photoshop</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-ai"></span> Illustrator</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-bl"></span> Blender 3D</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-c4d"></span> Cinema 4D</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-cc"></span> CapCut Pro</div>
-              <div class="software-pill" title="Clique para ver detalhes"><span class="dot dot-dv"></span> DaVinci Resolve</div>
+              <button type="button" class="software-pill"><span class="dot dot-ae" aria-hidden="true"></span>After Effects</button>
+              <button type="button" class="software-pill"><span class="dot dot-pr" aria-hidden="true"></span>Premiere Pro</button>
+              <button type="button" class="software-pill"><span class="dot dot-ps" aria-hidden="true"></span>Photoshop</button>
+              <button type="button" class="software-pill"><span class="dot dot-ai" aria-hidden="true"></span>Illustrator</button>
+              <button type="button" class="software-pill"><span class="dot dot-bl" aria-hidden="true"></span>Blender 3D</button>
+              <button type="button" class="software-pill"><span class="dot dot-c4d" aria-hidden="true"></span>Cinema 4D</button>
+              <button type="button" class="software-pill"><span class="dot dot-cc" aria-hidden="true"></span>CapCut Pro</button>
+              <button type="button" class="software-pill"><span class="dot dot-dv" aria-hidden="true"></span>DaVinci Resolve</button>
             </div>
 
           </div>
@@ -323,8 +337,10 @@
 
         <div class="process-grid">
           <div class="process-card">
-            <span class="process-step-num">01</span>
-            <div class="process-icon">💡</div>
+            <span class="process-step-num" aria-hidden="true">01</span>
+            <div class="process-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></svg>
+            </div>
             <h3 class="process-title">Briefing &amp; Estratégia</h3>
             <p class="process-desc">
               Alinhamento detalhado sobre os objetivos do projeto, público-alvo, referências visuais e tom de voz desejado.
@@ -332,8 +348,10 @@
           </div>
 
           <div class="process-card">
-            <span class="process-step-num">02</span>
-            <div class="process-icon">🎨</div>
+            <span class="process-step-num" aria-hidden="true">02</span>
+            <div class="process-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1" fill="currentColor"/><circle cx="17.5" cy="10.5" r="1" fill="currentColor"/><circle cx="8.5" cy="7.5" r="1" fill="currentColor"/><circle cx="6.5" cy="12.5" r="1" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/></svg>
+            </div>
             <h3 class="process-title">Direção de Arte &amp; Design</h3>
             <p class="process-desc">
               Criação de styleframes, storyboards, seleção de tipografia, paleta cromática e montagem da estrutura visual.
@@ -341,8 +359,10 @@
           </div>
 
           <div class="process-card">
-            <span class="process-step-num">03</span>
-            <div class="process-icon">⚡</div>
+            <span class="process-step-num" aria-hidden="true">03</span>
+            <div class="process-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
             <h3 class="process-title">Animação &amp; Edição</h3>
             <p class="process-desc">
               Construção dos movimentos, curvas de aceleração, montagem rítmica com a trilha sonora e sound effects.
@@ -350,8 +370,10 @@
           </div>
 
           <div class="process-card">
-            <span class="process-step-num">04</span>
-            <div class="process-icon">🚀</div>
+            <span class="process-step-num" aria-hidden="true">04</span>
+            <div class="process-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+            </div>
             <h3 class="process-title">Refinamento &amp; Entrega</h3>
             <p class="process-desc">
               Color grading, revisão minuciosa, ajustes finos e exportação otimizada nos formatos necessários para veiculação.
@@ -368,60 +390,68 @@
           <div class="contact-layout">
             
             <div class="contact-info-col">
-              <span class="section-tag" style="color: var(--accent-cyan);">Vamos Colaborar?</span>
-              <h3>Pronto para dar o próximo passo no seu projeto?</h3>
+              <span class="section-tag section-tag-cyan">Vamos Colaborar?</span>
+              <h2 class="contact-title">Pronto para dar o próximo passo no seu projeto?</h2>
               <p>
                 Estou disponível para projetos pontuais, criação de campanhas completas, showreels e parcerias com agências ou marcas. Escolha o canal de sua preferência:
               </p>
 
               <div class="contact-methods">
-                <a href="https://api.whatsapp.com/send?phone=5511999999999&text=Ol%C3%A1%20Diego!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20motion/design." target="_blank" rel="noopener noreferrer" class="contact-method-item">
-                  <div class="contact-method-icon" style="background: #10b981;">💬</div>
+                <a href="https://api.whatsapp.com/send?phone=5511961689536&text=Ol%C3%A1%20Diego!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20motion/design." target="_blank" rel="noopener noreferrer" class="contact-method-item">
+                  <div class="contact-method-icon icon-whatsapp" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                  </div>
                   <div>
                     <div class="contact-method-title">WhatsApp Direto</div>
                     <div class="contact-method-val">Iniciar conversa imediata</div>
                   </div>
                 </a>
 
-                <a href="mailto:contato@diego.design?subject=Novo%20Projeto%20de%20Design/Motion" class="contact-method-item">
-                  <div class="contact-method-icon">✉️</div>
+                <a href="mailto:diegop.freitas@gmail.com?subject=Novo%20Projeto%20de%20Design/Motion" class="contact-method-item">
+                  <div class="contact-method-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                  </div>
                   <div>
                     <div class="contact-method-title">Email</div>
-                    <div class="contact-method-val">contato@diego.design</div>
+                    <div class="contact-method-val">diegop.freitas@gmail.com</div>
                   </div>
                 </a>
 
-                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="contact-method-item">
-                  <div class="contact-method-icon" style="background: #0057ff;">Bē</div>
+                <a href="https://www.behance.net/diipmotion" target="_blank" rel="noopener noreferrer" class="contact-method-item">
+                  <div class="contact-method-icon icon-behance" aria-hidden="true">Bē</div>
                   <div>
                     <div class="contact-method-title">Behance</div>
-                    <div class="contact-method-val">Ver Portfólio no Behance</div>
+                    <div class="contact-method-val">behance.net/diipmotion</div>
                   </div>
                 </a>
               </div>
             </div>
 
             <div class="contact-form-col">
-              <h4 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 20px;">Envie uma Mensagem Rápida</h4>
-              <form id="quickContactForm">
+              <h3 class="contact-form-title">Envie uma Mensagem Rápida</h3>
+              <p class="contact-form-hint">A mensagem abre no WhatsApp, já preenchida, para você revisar e enviar.</p>
+              <form id="quickContactForm" novalidate>
                 <div class="form-group">
                   <label class="form-label" for="senderName">Seu Nome ou Empresa</label>
-                  <input type="text" id="senderName" class="form-input" placeholder="Ex: Camila / Agência Lumina" required>
+                  <input type="text" id="senderName" name="name" class="form-input" placeholder="Ex: Camila / Agência Lumina" autocomplete="name" required aria-describedby="senderNameError">
+                  <p class="form-error" id="senderNameError" hidden>Informe seu nome ou o nome da empresa.</p>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label" for="senderContact">Email ou Telefone</label>
-                  <input type="text" id="senderContact" class="form-input" placeholder="Ex: seuemail@empresa.com ou WhatsApp" required>
+                  <input type="text" id="senderContact" name="contact" class="form-input" placeholder="Ex: seuemail@empresa.com ou WhatsApp" autocomplete="email" required aria-describedby="senderContactError">
+                  <p class="form-error" id="senderContactError" hidden>Informe um email ou telefone para retorno.</p>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label" for="senderMsg">Como posso ajudar?</label>
-                  <textarea id="senderMsg" class="form-textarea" placeholder="Conte brevemente sobre o projeto, formato (Reels, comercial, institucional) e prazo estimado..." required></textarea>
+                  <textarea id="senderMsg" name="message" class="form-textarea" placeholder="Conte brevemente sobre o projeto, formato (Reels, comercial, institucional) e prazo estimado..." required aria-describedby="senderMsgError"></textarea>
+                  <p class="form-error" id="senderMsgError" hidden>Conte um pouco sobre o projeto.</p>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                  <span>Enviar Mensagem</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                <button type="submit" class="btn btn-primary btn-block">
+                  <span>Continuar no WhatsApp</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                 </button>
               </form>
             </div>
@@ -440,26 +470,26 @@
           &copy; 2026 <strong>Diego</strong> — Designer Multidisciplinar &amp; Motion. Todos os direitos reservados.
         </div>
 
-        <div class="footer-socials">
+        <nav class="footer-socials" aria-label="Rodapé">
           <a href="#home" class="footer-social-link">Início</a>
           <a href="#projetos" class="footer-social-link">Projetos</a>
           <a href="#sobre" class="footer-social-link">Sobre Mim</a>
           <a href="#contato" class="footer-social-link">Contato</a>
-        </div>
+        </nav>
 
-        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Voltar ao Topo">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+        <button type="button" class="back-to-top" id="backToTopBtn" aria-label="Voltar ao topo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
         </button>
       </div>
     </div>
   </footer>
 
   <!-- CINEMATIC MODAL PLAYER PRO MAX -->
-  <div class="modal-backdrop" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-container">
-      
+  <div class="modal-backdrop" id="projectModal">
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
       <!-- Ambient Backlight Bloom -->
-      <div class="modal-ambient-glow" id="modalAmbientGlow"></div>
+      <div class="modal-ambient-glow" id="modalAmbientGlow" aria-hidden="true"></div>
 
       <!-- Cabeçalho do Modal com Ações de Navegação -->
       <div class="modal-header-bar">
@@ -468,15 +498,23 @@
           <h3 class="modal-title-text" id="modalTitle">Título do Projeto</h3>
         </div>
         <div class="modal-nav-actions">
-          <button class="modal-icon-btn" id="modalShareBtn" title="Copiar link do projeto">🔗</button>
-          <button class="modal-icon-btn" id="modalPrevProjectBtn" title="Projeto Anterior (Seta Esquerda)">&larr;</button>
-          <button class="modal-icon-btn" id="modalNextProjectBtn" title="Próximo Projeto (Seta Direita)">&rarr;</button>
-          <button class="modal-icon-btn modal-close-btn" id="modalCloseBtn" aria-label="Fechar Modal">&times;</button>
+          <button type="button" class="modal-icon-btn" id="modalShareBtn" title="Copiar link do projeto" aria-label="Copiar link do projeto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button type="button" class="modal-icon-btn" id="modalPrevProjectBtn" title="Projeto anterior (←)" aria-label="Projeto anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="modal-icon-btn" id="modalNextProjectBtn" title="Próximo projeto (→)" aria-label="Próximo projeto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button type="button" class="modal-icon-btn modal-close-btn" id="modalCloseBtn" title="Fechar (Esc)" aria-label="Fechar projeto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
         </div>
       </div>
 
       <!-- Barra de Troca de Mídia -->
-      <div class="modal-switcher" id="modalSwitcher"></div>
+      <div class="modal-switcher" id="modalSwitcher" role="group" aria-label="Mídias do projeto"></div>
 
       <!-- Corpo do Modal -->
       <div class="modal-body">
@@ -488,10 +526,11 @@
             <p class="modal-desc-paragraph" id="modalFullDesc">
               Descrição detalhada do projeto...
             </p>
-            <div id="modalTagsList" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;"></div>
-            <div style="font-size: 0.74rem; color: var(--text-dim); margin-top: 18px;">
-              💡 Dica: Navegue com <strong>&larr;</strong> e <strong>&rarr;</strong> do teclado ou pressione <strong>ESC</strong> para sair.
-            </div>
+            <div id="modalTagsList" class="modal-tags-list"></div>
+            <p class="modal-keyboard-hint">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg>
+              <span>Navegue com <kbd>&larr;</kbd> <kbd>&rarr;</kbd> ou pressione <kbd>Esc</kbd> para sair.</span>
+            </p>
           </div>
 
           <div class="modal-side-meta">
@@ -501,10 +540,10 @@
             </div>
             <div>
               <span class="meta-label">Softwares Utilizados</span>
-              <div id="modalToolsList" style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;"></div>
+              <div id="modalToolsList" class="modal-tools-list"></div>
             </div>
-            <div style="margin-top: 10px;">
-              <a href="#contato" onclick="closeModal()" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding: 10px 16px;">
+            <div class="modal-cta-wrap">
+              <a href="#contato" id="modalContactCta" class="btn btn-primary btn-block btn-sm">
                 Solicitar Projeto Semelhante
               </a>
             </div>
@@ -517,9 +556,7 @@
   </div>
 
   <!-- Toast de Notificação -->
-  <div class="toast-msg" id="toastNotification">
-    Mensagem enviada com sucesso!
-  </div>
+  <div class="toast-msg" id="toastNotification" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Script Principal -->
   <script src="main.js"></script>
