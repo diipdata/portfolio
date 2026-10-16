@@ -261,7 +261,8 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(2.6rem, 7.4vw, 6.6rem);
+  /* 8.6vw garante que "TRANSFORMANDO" caiba em telas a partir de 320px */
+  font-size: clamp(1.9rem, 8.6vw, 6.6rem);
   font-weight: 900;
   line-height: 0.95;
   max-width: 14ch;

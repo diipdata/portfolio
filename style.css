@@ -79,6 +79,8 @@ button {
 
 h1, h2, h3, h4 {
   text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 p {
@@ -298,6 +300,8 @@ body {
 
 .btn-block {
   width: 100%;
+  white-space: normal;
+  text-align: center;
 }
 
 .btn-sm {
@@ -1606,6 +1610,11 @@ body {
 .contact-method-val {
   font-weight: 700;
   font-size: 1.02rem;
+  overflow-wrap: anywhere;
+}
+
+.contact-method-item > div:last-child {
+  min-width: 0;
 }
 
 .contact-form-col {
@@ -1712,7 +1721,10 @@ body {
   border: 1px solid var(--border-bright);
   border-radius: var(--radius-xl);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), var(--specular-line);
-  overflow: hidden;
+  /* O modal inteiro rola como um bloco: nada fica preso fora da área visível */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   transform: scale(0.94) translateY(24px);
@@ -1744,8 +1756,9 @@ body {
   padding: 18px 26px;
   background: rgba(14, 18, 30, 0.95);
   border-bottom: 1px solid var(--border-subtle);
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .modal-header-info {
@@ -1795,7 +1808,7 @@ body {
 }
 
 .modal-body {
-  overflow-y: auto;
+  flex-shrink: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1810,34 +1823,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
-  max-height: 540px;
+  /* Altura proporcional à tela para sobrar espaço para a descrição em notebooks */
+  height: clamp(220px, 58vh, 560px);
   overflow: hidden;
 }
 
-.modal-player-viewport video {
-  width: 100%;
-  height: 100%;
-  max-height: 540px;
-  object-fit: contain;
-  background: #000;
-}
-
+.modal-player-viewport video,
 .modal-player-viewport img {
   width: 100%;
   height: 100%;
-  max-height: 540px;
   object-fit: contain;
+  background: #000;
 }
 
 .modal-switcher {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
   gap: 8px;
   padding: 12px 26px;
   background: rgba(10, 13, 20, 0.95);
   border-bottom: 1px solid var(--border-subtle);
-  overflow-x: auto;
 }
 
 .modal-switch-btn {
@@ -2061,7 +2068,7 @@ body {
   .about-grid { grid-template-columns: 1fr; gap: 45px; }
   .about-photo-wrapper { max-width: 390px; margin: 0 auto; }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
-  .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+  .contact-layout { grid-template-columns: minmax(0, 1fr); gap: 40px; }
 }
 
 @media (max-width: 768px) {
@@ -2109,7 +2116,15 @@ body {
   .modal-header-info { min-width: 0; flex-wrap: wrap; gap: 8px; }
   .modal-title-text { font-size: 1.05rem; }
   .modal-nav-actions { gap: 6px; }
-  .modal-player-viewport { min-height: 240px; }
+  .modal-player-viewport { height: clamp(200px, 50vh, 420px); }
+  /* No toque, a lista de mídias vira uma faixa deslizável com snap */
+  .modal-switcher {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 10px 14px;
+  }
+  .modal-switch-btn { scroll-snap-align: start; }
   .modal-details-area { grid-template-columns: 1fr; padding: 22px 18px; gap: 22px; }
   .footer-inner { flex-direction: column; text-align: center; }
   .footer-socials { flex-wrap: wrap; justify-content: center; }
