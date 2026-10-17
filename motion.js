@@ -16,9 +16,12 @@
   gsap.registerPlugin(ScrollTrigger, SplitText, Flip);
   root.classList.add("motion-on");
 
-  // Curvas e durações compartilhadas (mesma linguagem em todo o site)
-  const EASE = "expo.out";
+  // Curvas e velocidade compartilhadas (mesma linguagem em todo o site)
+  // SPEED < 1 deixa tudo mais lento (0.8 = durações 25% mais longas); 1 = original
+  const SPEED = 0.8;
+  const EASE = "power3.out";
   const EASE_MOVE = "power3.inOut";
+  gsap.globalTimeline.timeScale(SPEED);
 
   document.addEventListener("DOMContentLoaded", () => {
     // Espera as fontes para dividir o texto em linhas certas, mas no máximo 1,2s
@@ -143,7 +146,8 @@
     if (!track) return;
     track.classList.add("is-gsap");
 
-    const loop = gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 40, ease: "none", repeat: -1 });
+    // Duração compensada pelo SPEED global: a faixa mantém o ritmo de 40s por volta
+    const loop = gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 40 * SPEED, ease: "none", repeat: -1 });
     const boost = gsap.quickTo(loop, "timeScale", { duration: 0.4, ease: "power2.out" });
     let settle;
 
