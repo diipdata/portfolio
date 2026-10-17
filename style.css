@@ -2428,6 +2428,34 @@ body {
   }
 }
 
+/* ==========================================================================
+   CAMADA DE ANIMAÇÃO (motion.js / GSAP)
+   ========================================================================== */
+
+/* Antes da entrada do hero: evita o "pisca" do conteúdo final */
+.motion-pending .hero-content,
+.motion-pending .hero-reel,
+.motion-pending .hero-grid .metrics-strip {
+  visibility: hidden;
+}
+
+/* O GSAP controla esses movimentos; transições CSS iguais causariam tremido */
+.motion-on .modal-container,
+.motion-on .modal-backdrop.active .modal-container {
+  transition: none;
+  transform: none;
+}
+
+.motion-on .marquee-track-reverse.is-gsap {
+  animation: none;
+}
+
+/* Linhas do SplitText: máscara com folga para não cortar acentos e o destaque */
+.sline-mask {
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+
 /* Dispositivos sem hover: sem efeitos de hover pegajosos */
 @media (hover: none) {
   .project-card:hover,

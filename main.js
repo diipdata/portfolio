@@ -274,6 +274,7 @@ function renderProjects() {
     const card = document.createElement("article");
     card.className = `project-card${isFeatured ? " is-featured" : ""}`;
     card.setAttribute("data-id", project.id);
+    card.dataset.flipId = project.id;
     card.id = `project-card-${project.id}`;
     card.tabIndex = 0;
     card.setAttribute("role", "button");
@@ -521,7 +522,10 @@ function setupFilterTabs() {
       btn.classList.add("active");
       btn.setAttribute("aria-pressed", "true");
       currentFilter = btn.getAttribute("data-filter");
+      // Ganchos para a camada de animação (motion.js) capturar o layout antes/depois
+      document.dispatchEvent(new CustomEvent("portfolio:beforefilter"));
       renderProjects();
+      document.dispatchEvent(new CustomEvent("portfolio:afterfilter"));
     });
   });
 }
@@ -657,8 +661,10 @@ function openProjectModal(projectId) {
   updateModalContent();
 
   const backdrop = document.getElementById("projectModal");
-  if (!backdrop.classList.contains("active")) {
+  const wasOpen = backdrop.classList.contains("active");
+  if (!wasOpen) {
     lastFocusedBeforeModal = document.activeElement;
+    document.dispatchEvent(new CustomEvent("portfolio:modalopen"));
   }
   backdrop.classList.add("active");
   document.body.style.overflow = "hidden";
@@ -670,6 +676,7 @@ function navigateProject(direction) {
   activeModalProjectIndex = (activeModalProjectIndex + direction + portfolioProjects.length) % portfolioProjects.length;
   activeMediaIndex = 0;
   updateModalContent();
+  document.dispatchEvent(new CustomEvent("portfolio:modalchange", { detail: { direction } }));
 }
 
 function updateModalContent() {
